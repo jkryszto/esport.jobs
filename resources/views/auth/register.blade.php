@@ -3,72 +3,83 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
 
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
+                    {!! Form::open([
+                        'route' => 'register',
+                        'files' => 'true'
+                    ]) !!}
+
+                       <logo-preview></logo-preview>
+
+                        <div class="row form-group">
+                            <div class="col-md-12">
+                                <label for="name">Company name</label>
+                                <input type="text" name="name" class="form-control" value="{{ old('name') }}" autocomplete="name" required>
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col-md-12">
+                                <label for="description">Description</label>
+                                <text-editor></text-editor>
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                                @if ($errors->has('name'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
-                                @endif
+                                <label for="location">Location</label>
+                                <input type="text" name="location" class="form-control" value="{{ old('location') }}" required>
                             </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @if ($errors->has('email'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
+                                <label for="url">Website</label>
+                                <input type="url" name="url" value="{{ old('url') }}" class="form-control">
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                        <hr>
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required autocomplete="new-password">
-
-                                @if ($errors->has('password'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
+                        <div class="row form-group">
+                            <div class="col-md-12">
+                                <label for="email">E-Mail Address</label>
+                                <input type="email" name="email" class="form-control" value="{{ old('email') }}" required autocomplete="email">
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                        <div class="row form-group">
+                            <div class="col-md-12">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" name="password" required autocomplete="new-password">
                             </div>
                         </div>
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
+                        <div class="row form-group">
+                            <div class="col-md-12">
+                                <label for="password_confirmation">Confirm password</label>
+                                <input type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                             </div>
                         </div>
-                    </form>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="submit" value="Register" class="btn btn-light btn-block">
+                            </div>
+                        </div>
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>
