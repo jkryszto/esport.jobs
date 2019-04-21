@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use App\Company;
 use Illuminate\Support\Str;
 
 class RegisterController extends Controller
@@ -57,6 +56,7 @@ class RegisterController extends Controller
             'description' => ['required'],
             'location' => ['required', 'string'],
             'url' => ['url'],
+            'logo' => ['required', 'image', 'max:2048']
         ]);
     }
 
@@ -68,21 +68,15 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $user = User::create([
+        return User::create([
+            'name' =>  $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'alias' => Str::slug($data['name'], '-'),
+            'logo' => $data['logo']->store('avatars', 'public'),
+            'description' => $data['description'],
+            'location' => $data['location'],
+            'url' => $data['url']
         ]);
-
-        $company = new Company();
-        $company->user_id = $user->id;
-        $company->name = $data['name'];
-        $company->alias = Str::slug($data['name'], '-');
-        $company->logo = $data['logo']->store('avatars', 'public');
-        $company->description = $data['description'];
-        $company->location = $data['location'];
-        $company->url = $data['url'];
-        $company->save();
-
-        return $user;
     }
 }

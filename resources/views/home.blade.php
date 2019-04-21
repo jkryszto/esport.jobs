@@ -27,7 +27,28 @@
                         </div>
                     @endempty
 
-                    {{Auth::user()->company}}
+                    @foreach (Auth::user()->jobs as $j)
+                        <hr>
+                        <div>
+                            <a href="{{route('job.show', [Auth::user()->alias, $j->alias])}}"><dt>{{$j->title}}</dt></a>
+                            <ul class="m-0">
+                                <li>{{$j->category->name}}</li>
+                                <li>{{$j->job_level->name}}</li>
+                                <li>{{$j->job_type->name}}</li>
+                            </ul>
+                            {!! Form::open(['route' => ['job.disable', $j]]) !!}
+                                <input type="submit" value="Disable">
+                            {!! Form::close() !!}
+                        </div> 
+                    @endforeach
+
+                    {{-- <hr>
+                    @foreach (Auth::user()->jobs()->onlyTrashed()->get() as $j)
+                        <a href="{{route('job.show', [Auth::user()->alias, $j->alias])}}"><dt>{{$j->title}}</dt></a>
+                        {!! Form::open(['route' => ['job.renew', $j]]) !!}
+                            <input type="submit" value="Renew">
+                        {!! Form::close() !!}
+                    @endforeach --}}
                 </div>
             </div>
         </div>

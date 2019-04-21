@@ -27,6 +27,7 @@ Vue.use(CKEditor);
 
 Vue.component('logo-preview', require('./components/LogoPreview.vue').default);
 Vue.component('text-editor', require('./components/TextEditor.vue').default);
+Vue.component('location', require('./components/Location.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

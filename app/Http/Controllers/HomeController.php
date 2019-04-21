@@ -13,7 +13,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -26,8 +26,15 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function test(Request $request) 
+    public function test() 
     {
-        dd($request->all());
+        $categories = array('Administrative', 'Business Development', 'Creative', 'Community Management', 'Customer Service', 'Data', 'Events', 'Marketing', 'Product Management', 'Production', 'Project Management', 'Software Engineering');
+
+        // dd($categories);
+
+        for($i = -1; $i++, $i < count($categories);)
+        {
+            echo $categories[$i];
+        }
     }
 }
